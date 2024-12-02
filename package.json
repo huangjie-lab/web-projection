@@ -22,12 +22,21 @@
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
     "lint": "eslint --fix \"./src/**/*.{js,jsx,ts,tsx}\"",
-    "format": "prettier --write \"src/**/*.+(js|ts|jsx|tsx)\""
+    "format": "prettier --write \"src/**/*.+(js|ts|jsx|tsx)\"",
+    "prepare": "husky install",
+    "commitlint": "commitlint --config commitlint.config.js -e -V"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
+    ]
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": "npm run lint",
+    "**/*.{js,jsx,tsx,ts,scss,md,json}": [
+      "prettier --write",
+      "eslint --fix"
     ]
   },
   "browserslist": {
@@ -43,6 +52,8 @@
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.6.0",
+    "@commitlint/config-conventional": "^19.6.0",
     "@eslint/js": "^9.16.0",
     "customize-cra": "^1.0.0",
     "eslint": "^8.57.1",
@@ -50,6 +61,8 @@
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.37.2",
     "globals": "^15.13.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.2.10",
     "node-sass": "^9.0.0",
     "prettier": "^3.4.1",
     "react-app-rewired": "^2.2.1",

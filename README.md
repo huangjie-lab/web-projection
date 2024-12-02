@@ -97,6 +97,73 @@
 
 #### stylelint
 
-#### commitlint
+#### husky和commitlint代码提交规范
 
-#### husky
+1. npm install husky -D并初始化husky:npx husky-init
+2. 只检查通过git add添加到暂存区的文件
+   npm install lint-staged -D
+3. 配置脚本命令
+
+```json
+   {
+      "lint-staged": {
+         "**/*.{js,jsx,ts,tsx}": "npm run lint",
+         "**/*.{js,jsx,tsx,ts,less,md,json}": [
+            "prettier --write",
+            "eslint --fix"
+         ]
+      },
+   }
+```
+
+4. 修改.husky/pre-commit文件，使提交时能执行lint-staged钩子
+
+```sh
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+pnpm exec lint-staged
+```
+
+5. 配置 commit-msg
+   commitlint 检查提交消息是否符合常规提交格式，用于在每次提交时生成符合规范的commit消息
+   5.1 安装commit-msg
+       npm install @commitlint/config-conventional @commitlint/cli --save-dev
+   5.2 添加 commitlint.config.js 配置文件
+
+```js
+       module.exports = {
+         extends: ["@commitlint/config-conventional"],
+         rules: {
+           // type 类型定义
+            "type-enum": [
+               2,
+               "always",
+               [
+                  "feat", // 新功能 feature
+                  "fix", // 修复 bug
+                  "docs", // 文档注释
+                  "style", // 代码格式(不影响代码运行的变动)
+                  "refactor", // 重构(既不增加新功能，也不是修复bug)
+                  "perf", // 性能优化
+                  "test", // 增加测试
+                  "chore", // 构建过程或辅助工具的变动
+                  "revert", // 回退
+                  "build", // 打包
+               ],
+            ],
+            // subject 大小写不做校验
+            // 自动部署的BUILD ROBOT的commit信息大写，以作区别
+            "subject-case": [0],
+         },
+      };
+```
+
+   5.3 执行以下命令添加commitlint钩子
+       npx husky add .husky/commit-msg "npm run commitlint"
+   5.4 在packages.json 配置
+```js
+       "scripts": {
+         "commitlint": "commitlint --config commitlint.config.js -e -V"
+       }
+```

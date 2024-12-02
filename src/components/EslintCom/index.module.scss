@@ -1,3 +1,7 @@
-.EslintCom{
-    color: orange;
+.EslintCom {
+  color: orange;
+  .EslintSuccess {
+    color: gray;
+    font-size: 20px;
+  }
 }

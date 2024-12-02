@@ -6,7 +6,9 @@
    **yarn add node-sass sass-loader --dev**
    （如果你的项目是通过 create-react-app 脚手架创建的，那么你需要使用
    customize-cra和react-app-rewired 来扩展配置。）
-2. npm install customize-cra react-app-rewired --save-dev
+2. 为了配置webpack不用弹出配置文件，可以新建config.overrides.js补充配置
+   npm install customize-cra react-app-rewired --save-dev
+   使用react-app-rewired需要在package.json中修改react-scripts为react-app-rewired
 3. 创建config.overrides.js文件配置
 
 ```js
@@ -46,7 +48,7 @@
 
 ```json
    "paths": {
-     "@/_":["./src/_"]
+     "@/*":["./src/*"]
    }
 ```
 
@@ -86,7 +88,7 @@
    npm install eslint-config-prettier eslint-plugin-prettier -D
 8. 最后在根目录下新建.vscode/setting.json文件配置
 
-```json
+```js
    {
      // 保存的时候自动格式化
      "editor.formatOnSave": true,

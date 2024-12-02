@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.scss'
-import EslintCom from './components/EslintCom'
-import PrettierCom from './components/PrettierCom'
+import EslintCom from '@/components/EslintCom'
+import PrettierCom from '@/components/PrettierCom'
 function App() {
   return (
     <div className="App">

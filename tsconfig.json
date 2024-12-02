@@ -18,12 +18,17 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "paths": {
+      "@/*":["./src/*"]
+    }
   },
   "include": [
     "src",
-    // "globals.d.ts",
-    "./**/*.ts"
+    "./**/*.ts",
+    "./**/*.tsx",
+    "./**/*.js",
+    "./**/*.jsx",
   ],
   "exclude": [
     "nodee_modules/**/*"

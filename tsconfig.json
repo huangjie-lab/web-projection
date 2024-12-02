@@ -21,6 +21,11 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
-, "globals.d.ts"  ]
+    "src",
+    // "globals.d.ts",
+    "./**/*.ts"
+  ],
+  "exclude": [
+    "nodee_modules/**/*"
+  ]
 }

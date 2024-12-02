@@ -1,41 +1,102 @@
 ### 前段工程化
 
 #### 配置scss以及模块化
+
 1. npm install node-sass sass-loader --save-dev
-**yarn add node-sass sass-loader --dev**
-（如果你的项目是通过 create-react-app 脚手架创建的，那么你需要使用
-customize-cra和react-app-rewired 来扩展配置。）
+   **yarn add node-sass sass-loader --dev**
+   （如果你的项目是通过 create-react-app 脚手架创建的，那么你需要使用
+   customize-cra和react-app-rewired 来扩展配置。）
 2. npm install customize-cra react-app-rewired --save-dev
 3. 创建config.overrides.js文件配置
-const { override, addWebpackAlias, addWebpackModuleRule } = require('customize-cra');
-module.exports = override(
-  addWebpackModuleRule({
-    test: /\.scss$/,
-    use: [
-      'style-loader',
-      'css-loader',
-      'sass-loader'
-    ]
-  })
-);
+
+```js
+   const { override, addWebpackAlias, addWebpackModuleRule } = require('customize-cra');
+   module.exports = override(
+     addWebpackModuleRule({
+       test: /\.scss$/,
+       use: [
+         'style-loader',
+         'css-loader',
+         'sass-loader'
+       ]
+     }),
+   );
+```
+
 4. 使用index.module.scss模块化
-**（出现index.module.scss模块找不到需要配置）**
-配置globals.d.ts文件
-declare module '*.scss'
+   **（出现index.module.scss模块找不到需要配置）**
+   配置globals.d.ts文件
+
+```ts
+   declare module '\*.scss'
+```
 
 #### 配置别名@
+
 1. webpack配置文件新增配置
-addWebpackAlias({
-  // 指定@符指向src目录
-  '@': path.resolve(__dirname, 'src'),
-})
+
+```js
+   addWebpackAlias({
+     // 指定@符指向src目录
+     '@': path.resolve(\_\_dirname, 'src'),
+   })
+```
+
 2. tsconfig文件新增@配置
-"paths": {
-  "@/*":["./src/*"]
-}
+
+```json
+   "paths": {
+     "@/_":["./src/_"]
+   }
+```
 
 #### eslint
+
+1. npm install eslint -D
+2. npx eslint --init 生成配置文件可改为.eslintrc.js, 默认会装部分eslint相关依赖
+3. 配置.eslintrc.js, rules字段可自定义
+4. 配置脚本
+
+```json
+   "scripts": {
+     "lint": "eslint --fix \"./src/**/*.{js,jsx,ts,tsx}\""
+   }
+```
+
+5. 执行npm run lint 测试效果
+6. 设置忽略文件 .eslintignore
+
 #### prettier
+
+1. npm install prettier -D
+2. vscode安装 Prettier - Code formatter插件
+3. 配置.prettierrc.js文件
+4. 配置脚本
+
+```json
+   "scripts": {
+     "format": "prettier --write \"src/**/*.+(js|ts|jsx|tsx)\""
+   }
+```
+
+5. 执行npm run format 测试效果
+6. 设置 .prettierignore 忽略文件
+
+7. 为了解决eslint和prettier的冲突，可以安装
+   npm install eslint-config-prettier eslint-plugin-prettier -D
+8. 最后在根目录下新建.vscode/setting.json文件配置
+
+```json
+   {
+     // 保存的时候自动格式化
+     "editor.formatOnSave": true,
+     // 默认格式化工具选择prettier
+     "editor.defaultFormatter": "esbenp.prettier-vscode"
+   }
+```
+
 #### stylelint
+
 #### commitlint
+
 #### husky

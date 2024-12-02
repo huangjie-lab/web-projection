@@ -45,6 +45,7 @@ module.exports = {
     'react/no-unescaped-entities': 0,
     'react/display-name': 0,
     '@typescript-eslint/naming-convention': 0,
-    'import/no-default-export': 0
+    'import/no-default-export': 0,
+    '@typescript-eslint/no-var-requires': 0 // 解决Require statement not part of import statement
   }
 };

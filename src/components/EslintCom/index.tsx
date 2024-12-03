@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './index.module.scss';
-function EslintCom() {
+const EslintCom = () => {
   return (
     <>
       <div className={styles.EslintCom}>
@@ -9,5 +9,5 @@ function EslintCom() {
       </div>
     </>
   );
-}
+};
 export default EslintCom;

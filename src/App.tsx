@@ -5,7 +5,7 @@ import PrettierCom from '@/components/PrettierCom';
 import { Button } from 'antd';
 import 'antd/dist/reset.css';
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <EslintCom />
@@ -14,5 +14,5 @@ function App() {
       <Button type="link">link</Button>
     </div>
   );
-}
+};
 export default App;

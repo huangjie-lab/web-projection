@@ -56,7 +56,6 @@ const App = () => {
   const handleSiderClick: MenuProps['onClick'] = ({ key, keyPath }) => {
     const name = keyPath.reverse().join('/') || '';
     setBreadcrumbName(name);
-    // if (key !== 'home' && key !== 'about') return;
     // 路由跳转
     navigate(key, {
       replace: false,
@@ -65,7 +64,6 @@ const App = () => {
       }
     });
   };
-
   return (
     <Layout>
       <Header className="header">
@@ -76,8 +74,8 @@ const App = () => {
         <Sider width={200} style={{ background: colorBgContainer }}>
           <Menu
             mode="inline"
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
+            defaultSelectedKeys={['info-look']}
+            defaultOpenKeys={['info']}
             style={{ height: '100%', borderRight: 0 }}
             items={siderMenu}
             onClick={handleSiderClick}
@@ -94,6 +92,7 @@ const App = () => {
             }}
           >
             {routeView || breadcrumbName}
+            <TestAntd name="测试redux" />
           </Content>
         </Layout>
       </Layout>

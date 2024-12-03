@@ -1,6 +1,5 @@
 /dist/*
 /build/*
 /node_modules/*
-*.json
 /public/*
 *.md

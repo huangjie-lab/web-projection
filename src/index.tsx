@@ -10,9 +10,10 @@ import 'dayjs/locale/zh-cn';
 // 日期组件汉化
 dayjs.locale('zh-cn');
 import { BrowserRouter } from 'react-router-dom';
-import store from './redux/root-store';
+import { getStore } from './redux/root-store';
 import { Provider } from 'react-redux';
 
+const store = getStore();
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>

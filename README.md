@@ -169,3 +169,10 @@ pnpm exec lint-staged
          "commitlint": "commitlint --config commitlint.config.js -e -V"
        }
 ```
+
+
+#### redux redux-saga react-redux @reduxjs/toolkit
+
+1. saga用来处理异步请求
+2. 使用@reduxjs/toolkit来管理不同模块的数据
+3. reducer中导出的action在saga中如果要被takelatest监听到，则不能在reducer中执行更新state的操作

@@ -46,6 +46,7 @@ module.exports = {
     'react/display-name': 0,
     '@typescript-eslint/naming-convention': 0,
     'import/no-default-export': 0,
-    '@typescript-eslint/no-var-requires': 0 // 解决Require statement not part of import statement
+    '@typescript-eslint/no-var-requires': 0, // 解决Require statement not part of import statement
+    'react/react-in-jsx-scope': 0 // 解决'React' must be in scope when using JSX （配置路由时写组件 eg: element:<Home/>）
   }
 };

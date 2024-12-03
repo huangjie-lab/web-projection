@@ -35,6 +35,12 @@
       "react-app/jest"
     ]
   },
+  "husky":{
+    "hooks":{
+      "commit-msg":"npm run commitlint",
+      "pre-commit":"npm run lint-staged"
+    }
+  },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
       "npm run lint:fix",

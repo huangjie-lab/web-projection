@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -20,7 +16,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "@/*":["./src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": [
@@ -28,9 +24,8 @@
     "./**/*.ts",
     "./**/*.tsx",
     "./**/*.js",
-    "./**/*.jsx", 
+    "./**/*.jsx",
+    ".husky/commit-msg-emoji.js"
   ],
-  "exclude": [
-    "nodee_modules/**/*"
-  ]
+  "exclude": ["nodee_modules/**/*"]
 }

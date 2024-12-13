@@ -31,7 +31,7 @@
     "eject": "react-app-rewired eject",
     "lint": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint --fix \"./src/**/*.{js,jsx,ts,tsx}\"",
-    "format": "prettier --write \"src/**/*.+(js|ts|jsx|tsx)\"",
+    "format": "prettier --write \"./src/**/*.+(js|ts|jsx|tsx|less|scss)\"",
     "prepare": "husky install",
     "commitlint": "commitlint --config commitlint.config.js -e -V || (node scripts/pre-commit.js&&exit 8)"
   },

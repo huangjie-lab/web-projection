@@ -21,6 +21,6 @@ module.exports = {
     // subject 大小写不做校验
     // 自动部署的BUILD ROBOT的commit信息大写，以作区别
     'subject-case': [0],
-    'header-max-length': [0, 'always', 3]
+    'header-max-length': [1, 'always', 3]
   }
 };

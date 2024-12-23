@@ -4,17 +4,39 @@ const { override, addWebpackAlias, addWebpackModuleRule } = require('customize-c
 const path = require('path');
 module.exports = override(
   // react脚手架默认支持scss 不支持less
-  // addWebpackModuleRule({
-  //   test: /\.scss$/,
-  //   use: [
-  //     'style-loader',
-  //     'css-loader',
-  //     'sass-loader'
-  //   ]
-  // }),
+  addWebpackModuleRule({
+    test: /\.scss$/,
+    use: [
+      'style-loader',
+      {
+        loader: 'css-loader',
+        // 配置后样式模块化index.module.scss可以改为index.scss
+        options: {
+          modules: {
+            mode: 'local',
+            localIdentName: '[local]--[hash:base64:5]'
+          }
+        }
+      },
+      'sass-loader'
+    ]
+  }),
   addWebpackModuleRule({
     test: /\.less$/,
-    use: ['style-loader', 'css-loader', 'less-loader']
+    use: [
+      'style-loader',
+      {
+        loader: 'css-loader',
+        // 配置后样式模块化index.module.scss可以改为index.scss
+        options: {
+          modules: {
+            mode: 'local',
+            localIdentName: '[local]--[hash:base64:5]'
+          }
+        }
+      },
+      'less-loader'
+    ]
   }),
   addWebpackAlias({
     // 指定@符指向src目录

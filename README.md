@@ -176,3 +176,21 @@ pnpm exec lint-staged
 1. saga用来处理异步请求
 2. 使用@reduxjs/toolkit来管理不同模块的数据
 3. reducer中导出的action在saga中如果要被takelatest监听到，则不能在reducer中执行更新state的操作
+
+
+#### 样式模块化 CSS MODULE 安装vscode插件 CSS Modules
+
+1. 没有配置webpack之前，要使用index.module.scss/less文件
+2. 配置webpack之后，可以改为index.scss/less文件
+```js
+{
+   loader: 'css-loader',
+   // 配置后样式模块化index.module.scss可以改为index.scss
+   options: {
+      modules: {
+         mode: 'local',
+         localIdentName: '[local]--[hash:base64:5]' // 自定义类名
+      }
+   }
+}
+```

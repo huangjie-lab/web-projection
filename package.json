@@ -29,6 +29,7 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
+    "lint-staged": "lint-staged",
     "lint": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint --fix \"./src/**/*.{js,jsx,ts,tsx}\"",
     "format": "prettier --write \"./src/**/*.+(js|ts|jsx|tsx|less|scss)\"",
@@ -39,15 +40,6 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
-  },
-  "lint-staged": {
-    "**/*.{js,jsx,ts,tsx}": [
-      "npm run lint:fix",
-      "npm run format"
-    ],
-    "**/*.{scss,less,md,json}": [
-      "prettier --write"
     ]
   },
   "browserslist": {

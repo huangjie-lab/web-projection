@@ -27,5 +27,6 @@
     "./**/*.jsx",
     ".husky/commit-msg-emoji.js"
   ],
-  "exclude": ["nodee_modules/**/*"]
+  // 忽略以下文件夹中的类型检验
+  "exclude": ["nodee_modules/**/*", "server/**/*", "config/**/*"]
 }

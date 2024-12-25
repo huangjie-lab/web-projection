@@ -194,3 +194,7 @@ pnpm exec lint-staged
    }
 }
 ```
+
+#### axios引入了ts类型校验 ts类型不要使用any
+
+#### 包管理工具npm v16以上

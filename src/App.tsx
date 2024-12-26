@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import TestAntd from '@/components/TestAntd';
+import { useState } from 'react';
 import routes from './routes';
 import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Layout, Menu, theme } from 'antd';
 import { useNavigate, useRoutes } from 'react-router-dom';
+import '@/common/common.scss';
 const { Header, Content, Sider } = Layout;
 const titleMenu: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
   key,
@@ -15,12 +15,12 @@ const siderMenu: MenuProps['items'] = [
   {
     key: 'home',
     icon: <UserOutlined />,
-    label: '人员管理'
+    label: 'home组件'
   },
   {
     key: 'about',
     icon: <NotificationOutlined />,
-    label: '关于系统'
+    label: 'about组件'
   },
   {
     key: 'info',
@@ -38,9 +38,9 @@ const siderMenu: MenuProps['items'] = [
     ]
   },
   {
-    key: 'statistics',
+    key: 'redux',
     icon: <NotificationOutlined />,
-    label: '数量统计'
+    label: 'redux组件'
   }
 ];
 const App = () => {
@@ -92,7 +92,6 @@ const App = () => {
             }}
           >
             {routeView || breadcrumbName}
-            <TestAntd name="测试redux" />
           </Content>
         </Layout>
       </Layout>

@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-
+import config from '@/utils/config';
 // 定义接口返回失败参数类型
 interface ErrorResponse {
   error_code: string;
@@ -47,14 +47,16 @@ export const createAxios = (baseURL: string) => {
       // 对响应数据做点什么
       switch (response.status) {
         case 401:
+          // 跳转登陆页面
           break;
       }
       return response;
     },
     (error) => {
       // 对响应错误做点什么
-      // if (error.response && error.response.data) {
-      // }
+      if (error.response && error.response.data) {
+        // 弹出统一错误提示
+      }
       return Promise.reject(error);
     }
   );
@@ -65,5 +67,6 @@ export const createAxios = (baseURL: string) => {
 /**
  * url: http://localhost:3001/api
  * 不同环境的url可以抽离到config下的配置文件 todo...
+ * 不同模块的请求域名可以各自配置
  */
 export const homeApi = createAxios('http://localhost:3001/api');

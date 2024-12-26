@@ -1,0 +1,16 @@
+{
+  "env": "local",
+  "buildtime": {
+    "cdnPath": "/"
+  },
+  "runtime": {
+    "env": "local",
+    "host": {
+      "crm_env": "local"
+    },
+    "api": {
+      "home": "http://localhost:3001/api"
+    },
+    "url": {}
+  }
+}

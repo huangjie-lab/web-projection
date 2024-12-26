@@ -12,6 +12,7 @@ const Home: React.FC = () => {
       <div className={styles.home}>home page</div>
       <div className={styles['css-module']}>TEST CSS MODULE -- WEBPACK CONFIG</div>
       <Button onClick={testAxios}>点击掉接口</Button>
+      <div className={styles.count}>home count</div>
     </>
   );
 };

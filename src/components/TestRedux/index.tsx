@@ -1,13 +1,14 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, version, DatePicker } from 'antd';
+import { Button } from 'antd';
+import styles from './index.scss';
 //导入 状态管理库的修改方法
 import { setUserInfo, setUserPwd, update } from '@/redux/user';
 import { update as updateCount, increment } from '@/redux/count';
-interface TestAntdProps {
+interface TestReduxProps {
   name: string;
 }
-const TestAntd: React.FC<TestAntdProps> = ({ name }) => {
+const TestRedux: React.FC<TestReduxProps> = ({ name }) => {
   const dispatch = useDispatch();
   //获取数据
   const { password, username, age } = useSelector((store) => (store as any).user);
@@ -41,13 +42,11 @@ const TestAntd: React.FC<TestAntdProps> = ({ name }) => {
   return (
     <div>
       <div>{name}</div>
-      <div>antd版本{version}</div>
-      <div style={{ margin: '10px 0' }}>redux数据更新时，使用到该数据的组件会重新render</div>
-      <div style={{ color: 'red', margin: '10px 0' }}>redux中的数据：密码{password}</div>
-      <div style={{ color: 'red', margin: '10px 0' }}>
+      <div className={styles.title}>redux数据更新时，使用到该数据的组件会重新render</div>
+      <div className={styles.count}>redux中的数据：密码{password}</div>
+      <div className={styles.count}>
         redux中的数据：个人信息{username}-{age}
       </div>
-      <DatePicker />
       <Button type="primary" onClick={handleAction}>
         触发 action
       </Button>
@@ -55,8 +54,7 @@ const TestAntd: React.FC<TestAntdProps> = ({ name }) => {
         触发saga action
       </Button>
       <Button type="link">link</Button>
-      <div>antd版本{version}</div>
-      <div style={{ color: 'red', margin: '10px 0' }}>count模块{count}</div>
+      <div className={styles.count}>count模块{count}</div>
       <Button type="primary" onClick={handleSyncAction}>
         触发同步action(无需saga且验证模块性)
       </Button>
@@ -66,4 +64,4 @@ const TestAntd: React.FC<TestAntdProps> = ({ name }) => {
     </div>
   );
 };
-export default TestAntd;
+export default TestRedux;

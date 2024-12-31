@@ -94,7 +94,7 @@ const myArray: IAnyArray<number> = [1, 2];
  */
 
 type Person = { name: string; age: number };
-type PerKeyof = keyof Person; // keyof后接类型
+type PerKeyof = keyof Person; // keyof后接类型 name | age
 const per1: PerKeyof = 'age';
 
 const person: Person = { name: 'name', age: 1 };

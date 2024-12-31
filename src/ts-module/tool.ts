@@ -73,6 +73,7 @@ getProp({ name: 'name', age: 1 }, 'name');
 
 /**
  * 索引签名类型
+ * 定义对象和数组
  */
 
 interface IAnyObj<T> {
@@ -91,6 +92,7 @@ const myArray: IAnyArray<number> = [1, 2];
 
 /**
  * 映射类型 in (keyof)
+ * typeof
  */
 
 type Person = { name: string; age: number };
@@ -102,7 +104,7 @@ type PerTypeof = typeof person; // typeof后接具体对象
 const per2: PerTypeof = { name: 'name', age: 1 };
 // 用法1： 根据联合类型创建新类型
 type PropKeys = 'x' | 'y' | 'z'; // const a: PropKeys = 'x';
-// 等价于{x:number;y：number;z:number} 三个属性都包含
+// 等价于{x:string;y：string;z:string} 三个属性都包含
 type types = { [key in PropKeys]: string };
 const typesObj: types = {
   x: '1',

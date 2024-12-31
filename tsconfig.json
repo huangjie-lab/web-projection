@@ -12,7 +12,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
@@ -25,7 +25,8 @@
     "./**/*.tsx",
     "./**/*.js",
     "./**/*.jsx",
-    ".husky/commit-msg-emoji.js"
+    ".husky/commit-msg-emoji.js",
+    "ts-module"
   ],
   // 忽略以下文件夹中的类型检验
   "exclude": ["nodee_modules/**/*", "server/**/*", "config/**/*"]

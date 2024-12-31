@@ -20,7 +20,7 @@ const partialaA: partiala = {
   id: '1'
 };
 type readonlya = Readonly<IProps>;
-const readonlyaA: readonlya = {
+const readonlyaA = {
   id: '1',
   title: '1',
   children: [1]

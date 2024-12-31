@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import Home from '@/pages/Home';
 import About from '@/pages/About';
-import TestRedux from '@/components/TestRedux';
+import TestRedux from '@/pages/TestRedux';
 
 interface JsxElement {
   path: string;

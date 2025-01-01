@@ -1,0 +1,50 @@
+.g-layout {
+  min-height: 100%;
+}
+.g-sider {
+  position: fixed !important;
+  top: 0;
+  bottom: 0;
+  z-index: 10000; // 防止内容滚动盖住了侧边栏
+  .sider-menu {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .icon {
+      width: 32px;
+    }
+    .brand {
+      display: flex;
+      flex: none;
+      gap: 10px;
+      align-items: center;
+      height: 48px;
+      // justify-content: center;
+      padding-left: 24px;
+      margin-left: 4px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      // h1 {
+      //   margin: 0;
+      // }
+    }
+    .menu {
+      inset-inline-start: 0;
+      flex: 1;
+      overflow: auto;
+      scrollbar-color: unset;
+      scrollbar-width: thin;
+    }
+  }
+}
+.g-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+  padding: 0 16px;
+}
+.container {
+  transition: all 0.2s;
+}

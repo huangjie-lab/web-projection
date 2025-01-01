@@ -8,7 +8,7 @@ app.post('/home', (req, res) => {
   res.json(json.homeResponse).status(200);
 });
 // 模拟功能权限
-app.get('auth/info', (req, res) => {
+app.get('/auth/info', (req, res) => {
   res.json(json.infoResponse).status(200);
 });
 // 模拟菜单权限

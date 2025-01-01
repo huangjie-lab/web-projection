@@ -1,101 +1,55 @@
-import { useState } from 'react';
-import routes from './routes';
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Layout, Menu, theme } from 'antd';
-import { useNavigate, useRoutes } from 'react-router-dom';
+import { ConfigProvider } from 'antd';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.scss';
-const { Header, Content, Sider } = Layout;
-const titleMenu: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
-  key,
-  label: `标题 ${key}`
-}));
+import { Provider } from 'react-redux';
+import zhCN from 'antd/locale/zh_CN';
+import 'antd/dist/reset.css';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+dayjs.locale('zh-cn');
+import { getStore } from './redux/root-store';
+import { useCallback, useEffect, useState } from 'react';
+import Loading from './components/loading';
+import Forbidden from './components/forbidden';
+import LayoutBasic from './components/layout-basic';
+import useAuthStore from './store/auth';
+const store = getStore();
 
-const siderMenu: MenuProps['items'] = [
-  {
-    key: 'home',
-    icon: <UserOutlined />,
-    label: 'home组件'
-  },
-  {
-    key: 'about',
-    icon: <NotificationOutlined />,
-    label: 'about组件'
-  },
-  {
-    key: 'info',
-    icon: <LaptopOutlined />,
-    label: '信息管理',
-    children: [
-      {
-        key: 'info-detail',
-        label: '信息详情'
-      },
-      {
-        key: 'info-look',
-        label: '信息查询'
-      }
-    ]
-  },
-  {
-    key: 'redux',
-    icon: <NotificationOutlined />,
-    label: 'redux组件'
-  }
-];
 const App = () => {
-  const {
-    token: { colorBgContainer }
-  } = theme.useToken();
-  // 获得路由表
-  const routeView = useRoutes(routes);
-  const navigate = useNavigate();
-  // 面包屑名称
-  const [breadcrumbName, setBreadcrumbName] = useState('home');
-  // 点击菜单
-  const handleSiderClick: MenuProps['onClick'] = ({ key, keyPath }) => {
-    const name = keyPath.reverse().join('/') || '';
-    setBreadcrumbName(name);
-    // 路由跳转
-    navigate(key, {
-      replace: false,
-      state: {
-        id: key
-      }
-    });
-  };
+  const [loading, setLoading] = useState(true);
+  const [hasAuthorized, setHasAuthorized] = useState(true);
+  const { fetchAuthInfo, fetchAuthMenus, fetchAuthResources } = useAuthStore();
+  const init = useCallback(async () => {
+    const info = await fetchAuthInfo();
+    if (!info) {
+      return;
+    }
+    const menus = await fetchAuthMenus();
+    const resources = await fetchAuthResources();
+    const mlen = Object.keys(menus).length;
+    const rlen = Object.keys(resources).length;
+    setHasAuthorized(mlen !== 0 || rlen !== 0);
+    setLoading(false);
+  }, [fetchAuthInfo, fetchAuthMenus, fetchAuthResources]);
+  useEffect(() => {
+    init();
+  }, [init]);
   return (
-    <Layout>
-      <Header className="header">
-        <div className="logo" />
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']} items={titleMenu} />
-      </Header>
-      <Layout>
-        <Sider width={200} style={{ background: colorBgContainer }}>
-          <Menu
-            mode="inline"
-            defaultSelectedKeys={['info-look']}
-            defaultOpenKeys={['info']}
-            style={{ height: '100%', borderRight: 0 }}
-            items={siderMenu}
-            onClick={handleSiderClick}
-          />
-        </Sider>
-        <Layout style={{ padding: '0 24px 24px' }}>
-          <div style={{ margin: '16px 0' }}>{breadcrumbName}</div>
-          <Content
-            style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-              background: colorBgContainer
-            }}
-          >
-            {routeView || breadcrumbName}
-          </Content>
-        </Layout>
-      </Layout>
-    </Layout>
+    <ConfigProvider locale={zhCN}>
+      {loading ? (
+        <Loading />
+      ) : hasAuthorized ? (
+        <Provider store={store}>
+          <BrowserRouter>
+            <Routes>
+              <Route path="*" element={<LayoutBasic />}></Route>
+            </Routes>
+          </BrowserRouter>
+        </Provider>
+      ) : (
+        <Forbidden />
+      )}
+    </ConfigProvider>
   );
 };
 export default App;

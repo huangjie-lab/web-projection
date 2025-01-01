@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosPromise, AxiosResponse } from 'axios';
 import config from '@/utils/config';
 // 定义接口返回失败参数类型
 interface ErrorResponse {
@@ -17,9 +17,9 @@ interface AxiosHomeResponse<T = any> {
   success?: boolean;
 }
 export type BaseResponse<T> = Promise<AxiosResponse<T>>;
-
 // 封装接口返回参数类型
 export type HomeResponse<T> = BaseResponse<AxiosHomeResponse<T> & ErrorResponse>;
+export type AuthResponse<T = any> = AxiosPromise<T>;
 /**
  * 设置全局配置
  */

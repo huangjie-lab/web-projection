@@ -4,7 +4,7 @@ import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/
 import type { MenuProps } from 'antd';
 import { Layout, Menu, theme } from 'antd';
 import { useNavigate, useRoutes } from 'react-router-dom';
-import '@/common/common.scss';
+import './App.scss';
 const { Header, Content, Sider } = Layout;
 const titleMenu: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
   key,

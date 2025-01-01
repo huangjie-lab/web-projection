@@ -1,0 +1,23 @@
+:global {
+  html,
+  body,
+  #root {
+    box-sizing: initial;
+    min-width: 1366px;
+    height: 100%;
+    overflow: auto;
+    background-color: red;
+  }
+  .flex {
+    display: flex;
+  }
+  .flex-col {
+    flex-direction: column;
+  }
+  .items-center {
+    align-items: center;
+  }
+  .justify-center {
+    justify-content: center;
+  }
+}

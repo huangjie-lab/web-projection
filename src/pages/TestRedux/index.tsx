@@ -11,7 +11,7 @@ interface TestReduxProps {
 }
 const TestRedux: React.FC<TestReduxProps> = ({ name = 'testredux' }) => {
   const dispatch = useDispatch();
-  //获取数据
+  //获取数据 使用全局状态里的数据 redux数据引入
   const { password, username, age } = useSelector((store: IReduxState) => store.user);
   const { count } = useSelector((store: IReduxState) => store.count);
 

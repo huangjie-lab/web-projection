@@ -1,16 +1,11 @@
 import React from 'react';
-import styles from './index.scss';
-import { useSelector } from 'react-redux';
-import { IReduxState } from '@/redux/root-reducer';
+import { useTranslation } from 'react-i18next';
 
-const Home: React.FC = () => {
-  const { count } = useSelector((store: IReduxState) => store.count);
-  const { username } = useSelector((store: IReduxState) => store.user);
-
+const Home: React.FC = (props) => {
+  const { t } = useTranslation();
   return (
     <>
-      <div className={styles.count}>{username}</div>
-      {/* <div className={'title'}>{username}</div> */}
+      <h1>{t('greeting')}</h1>
     </>
   );
 };

@@ -16,6 +16,11 @@ import useAuthStore from './store/auth';
 import { filterRoutes } from './pages/routes';
 import WaterMask from './components/water-mask';
 const store = getStore();
+// 国际化
+import { I18nextProvider } from 'react-i18next';
+import i18next from 'i18next';
+import enTranslation from '@/assets/locales/en';
+import zhTranslation from '@/assets/locales/zh';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -40,24 +45,36 @@ const App = () => {
   useEffect(() => {
     init();
   }, [init]);
-
+  useEffect(() => {
+    // 初始化 i18next
+    i18next.init({
+      interpolation: { escapeValue: false }, // React 已经处理了 XSS
+      lng: localStorage.getItem('lang') || 'zh', // 默认语言
+      resources: {
+        en: { translation: enTranslation },
+        zh: { translation: zhTranslation }
+      }
+    });
+  }, [i18next]);
   return (
     <WaterMask>
-      <ConfigProvider locale={zhCN}>
-        {loading ? (
-          <Loading />
-        ) : hasAuthorized ? (
-          <Provider store={store}>
-            <BrowserRouter>
-              <Routes>
-                <Route path="*" element={<LayoutBasic />}></Route>
-              </Routes>
-            </BrowserRouter>
-          </Provider>
-        ) : (
-          <Forbidden />
-        )}
-      </ConfigProvider>
+      <I18nextProvider i18n={i18next}>
+        <ConfigProvider locale={zhCN}>
+          {loading ? (
+            <Loading />
+          ) : hasAuthorized ? (
+            <Provider store={store}>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="*" element={<LayoutBasic />}></Route>
+                </Routes>
+              </BrowserRouter>
+            </Provider>
+          ) : (
+            <Forbidden />
+          )}
+        </ConfigProvider>
+      </I18nextProvider>
     </WaterMask>
   );
 };

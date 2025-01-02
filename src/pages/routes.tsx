@@ -115,6 +115,7 @@ export const routes: MainRouteProps[] = [
     element: lazyLoad(() => import('./testRedux')),
     exact: true,
     title: '测试redux',
+    hideInMenu: true,
     icon: <UnorderedListOutlined />
   },
   {

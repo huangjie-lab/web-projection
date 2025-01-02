@@ -1,5 +1,5 @@
 import useAuthStore from '@/store/auth';
-import { useEffect, useRef, type FC, type ReactElement } from 'react';
+import { useEffect, type FC, type ReactElement } from 'react';
 /**
  * 高阶组件
  * 实现水印效果
@@ -27,6 +27,8 @@ const defaultConfig = {
   backupText: '水印文本'
 };
 function createBase64(maskText: string | undefined) {
+  console.log(maskText, 'maskText');
+
   // 解构配置
   const { color, opacity, size, family, angle, width, height, backupText } = defaultConfig;
   // 创建一个画布
@@ -95,17 +97,17 @@ const addMutationListener = (targetNode: any) => {
     subtree: true
   });
 };
-const WaterMask: FC<WaterMaskProps> = (props) => {
+const WaterMask: FC<WaterMaskProps> = ({ children }) => {
   const { info } = useAuthStore();
   const init = () => {
     parentEl = document.getElementById('root') as HTMLDivElement;
     // 设置父元素定位
-    parentEl.style.position = 'relative';
+    // parentEl.style.position = 'relative';
     // 创建水印元素
     waterMaskEl = document.createElement('div');
     waterMaskEl.className = 'water-mask';
     waterMaskEl.style.pointerEvents = 'none';
-    waterMaskEl.style.position = 'absolute';
+    waterMaskEl.style.position = 'fixed';
     waterMaskEl.style.top = '0';
     waterMaskEl.style.left = '0';
     const { clientWidth, clientHeight } = parentEl;
@@ -119,12 +121,12 @@ const WaterMask: FC<WaterMaskProps> = (props) => {
     }
   };
   useEffect(() => {
-    init();
-  }, [init]);
+    info && init();
+  }, [info]);
 
   // 监听水印元素和容器元素
   // addMutationListener(parentEl);
-  return props.children;
+  return children;
 };
 
 export default WaterMask;

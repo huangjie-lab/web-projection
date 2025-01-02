@@ -2,9 +2,9 @@ import type { FC } from 'react';
 import { Layout, message, Avatar, Button, theme, Dropdown, type MenuProps, Space } from 'antd';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import useAuthStore from '@/store/auth';
-// import config from 'src/utils/config'
-// import { postLogout } from 'src/api/auth'
-// import MyBreadcrumb from '../my-breadcrumb'
+// import config from '@/utils/config';
+import { postLogout } from '@/api/auth';
+// import MyBreadcrumb from '../my-breadcrumb';
 import styles from './index.scss';
 
 interface BasicHeaderProps {
@@ -16,8 +16,6 @@ const BasicHeader: FC<BasicHeaderProps> = (props) => {
   const { collapsed, onToggle } = props;
   const { token } = theme.useToken();
   const { info } = useAuthStore();
-  console.log(info, 'info');
-
   const items: MenuProps['items'] = [
     {
       label: <a onClick={logout}>退出登录</a>,
@@ -28,12 +26,11 @@ const BasicHeader: FC<BasicHeaderProps> = (props) => {
 
   // 退出
   async function logout() {
-    // const { status } = await postLogout()
-    // if (status < 300) {
-    //   message.success('退出成功')
-    //   const redirect = encodeURIComponent(window.location.href)
-    //   window.location.href = `${config.url.internal}/login?redirect=${redirect}`
-    // }
+    const { status, data } = await postLogout();
+    if (/^2/.test(status.toString())) {
+      message.success('退出成功');
+      // const redirect = encodeURIComponent(window.location.href);
+    }
   }
 
   return (

@@ -198,3 +198,9 @@ pnpm exec lint-staged
 #### axios引入了ts类型校验 ts类型不要使用any
 
 #### 包管理工具npm v16以上
+
+#### 新增 菜单 功能权限(zustand) 后台系统页面布局和容错规范化
+
+#### 主题切换 国际化 todo...
+
+#### 水印 canvas方法 使用MutationObserver(待完善)

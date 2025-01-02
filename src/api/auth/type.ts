@@ -30,3 +30,10 @@ export type AuthResourceEntity = {
   description: string;
   status: 'YES' | 'NO';
 };
+
+/**
+ * 登出
+ */
+export type AuthLogout = {
+  data: boolean;
+};

@@ -14,6 +14,7 @@ import Forbidden from './components/forbidden';
 import LayoutBasic from './components/layout-basic';
 import useAuthStore from './store/auth';
 import { filterRoutes } from './pages/routes';
+import WaterMask from './components/water-mask';
 const store = getStore();
 
 const App = () => {
@@ -39,22 +40,25 @@ const App = () => {
   useEffect(() => {
     init();
   }, [init]);
+
   return (
-    <ConfigProvider locale={zhCN}>
-      {loading ? (
-        <Loading />
-      ) : hasAuthorized ? (
-        <Provider store={store}>
-          <BrowserRouter>
-            <Routes>
-              <Route path="*" element={<LayoutBasic />}></Route>
-            </Routes>
-          </BrowserRouter>
-        </Provider>
-      ) : (
-        <Forbidden />
-      )}
-    </ConfigProvider>
+    <WaterMask>
+      <ConfigProvider locale={zhCN}>
+        {loading ? (
+          <Loading />
+        ) : hasAuthorized ? (
+          <Provider store={store}>
+            <BrowserRouter>
+              <Routes>
+                <Route path="*" element={<LayoutBasic />}></Route>
+              </Routes>
+            </BrowserRouter>
+          </Provider>
+        ) : (
+          <Forbidden />
+        )}
+      </ConfigProvider>
+    </WaterMask>
   );
 };
 export default App;

@@ -1,2 +1,14 @@
 @import '@/assets/styles/base.scss';
 @import '@/assets/styles/common.scss';
+
+:global {
+  #root::before {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    pointer-events: none;
+  }
+}

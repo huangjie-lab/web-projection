@@ -19,6 +19,10 @@ app.get('/authority/application/menus', (req, res) => {
 app.get('/authority/all', (req, res) => {
   res.json(json.allResponse).status(200);
 });
+// 模拟功能权限
+app.post('/auth/logout', (req, res) => {
+  res.json(json.logoutResponse).status(200);
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);

@@ -76,9 +76,13 @@ const infoResponse = {
   phone_number: '177****6332',
   fullname: 'huangjie'
 };
+const logoutResponse = {
+  data: true
+};
 module.exports = {
   homeResponse,
   menusResponse,
   allResponse,
-  infoResponse
+  infoResponse,
+  logoutResponse
 };

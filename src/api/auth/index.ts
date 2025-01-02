@@ -25,3 +25,8 @@ export const getAuthResources = (): AuthResponse<{
 }> => {
   return homeApi.get('/authority/all');
 };
+
+/**
+ * 退出登录
+ */
+export const postLogout = (): AuthResponse<Types.AuthLogout> => homeApi.post('/auth/logout');

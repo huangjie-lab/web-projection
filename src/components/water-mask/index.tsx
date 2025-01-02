@@ -1,3 +1,4 @@
+import useAuthStore from '@/store/auth';
 import { useEffect, useRef, type FC, type ReactElement } from 'react';
 /**
  * 高阶组件
@@ -11,9 +12,9 @@ const defaultConfig = {
   /** 文本颜色 */
   color: '#c0c4cc',
   /** 文本透明度 */
-  opacity: 0.1,
+  opacity: 0.2,
   /** 文本字体大小 */
-  size: 12,
+  size: 14,
   /** 文本字体 */
   family: 'serif',
   /** 文本倾斜角度 */
@@ -25,7 +26,7 @@ const defaultConfig = {
   /** 水印文本，暂时放到这里，一般会提取出来将其作为一个全局变量*/
   backupText: '水印文本'
 };
-function createBase64() {
+function createBase64(maskText: string | undefined) {
   // 解构配置
   const { color, opacity, size, family, angle, width, height, backupText } = defaultConfig;
   // 创建一个画布
@@ -49,7 +50,7 @@ function createBase64() {
     //设置倾斜度
     ctx.rotate((Math.PI / 180) * angle);
     //设置水印文本
-    ctx.fillText(backupText, 0, height / 2);
+    ctx.fillText(maskText || backupText, 0, height / 2);
   }
   return canvasEl.toDataURL();
 }
@@ -95,6 +96,7 @@ const addMutationListener = (targetNode: any) => {
   });
 };
 const WaterMask: FC<WaterMaskProps> = (props) => {
+  const { info } = useAuthStore();
   const init = () => {
     parentEl = document.getElementById('root') as HTMLDivElement;
     // 设置父元素定位
@@ -110,7 +112,7 @@ const WaterMask: FC<WaterMaskProps> = (props) => {
     waterMaskEl.style.height = `${clientHeight}px`;
     waterMaskEl.style.zIndex = '99999';
     // 创建水印内容并添加到父元素中
-    waterMaskEl.style.background = `url(${createBase64()}) left top repeat`;
+    waterMaskEl.style.background = `url(${createBase64(info?.fullname)}) left top repeat`;
     parentEl.appendChild(waterMaskEl);
   };
   useEffect(() => {

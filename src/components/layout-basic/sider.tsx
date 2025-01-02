@@ -4,8 +4,9 @@ import type { ItemType } from 'antd/es/menu/interface';
 import { Link } from 'react-router';
 import styles from './index.scss';
 import IconLogo from '@/assets/images/icon-logo.svg';
-import { MainRouteProps, routes } from '@/pages/routes';
+import { MainRouteProps } from '@/pages/routes';
 import useMenus from '@/hooks/use-menus';
+import useAuthStore from '@/store/auth';
 
 type BasicSiderProps = {
   collapsed: boolean;
@@ -52,6 +53,7 @@ const transformMenu = (routes: MainRouteProps[]) => {
 const BasicSider: FC<BasicSiderProps> = ({ collapsed }) => {
   const [menus, setMenus] = useState<ItemType[]>([]);
   const { openKeys, selectedKeys, onOpenChange } = useMenus();
+  const { routes } = useAuthStore();
   useEffect(() => {
     const list = transformMenu(routes);
     setMenus(list);

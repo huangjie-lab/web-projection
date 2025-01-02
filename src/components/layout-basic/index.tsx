@@ -4,11 +4,11 @@ import { useRoutes } from 'react-router';
 import styles from './index.scss';
 import BasicSider from './sider';
 import BasicHeader from './header';
-import { routes } from '@/pages/routes';
+import useAuthStore from '@/store/auth';
 
 const LayoutBasic: FC = () => {
   const [collapsed, setCollapsed] = useState(false);
-  // const { routes } = useAuthStore();
+  const { routes } = useAuthStore();
   const element = useRoutes(routes);
   const { token } = theme.useToken();
 

@@ -60,8 +60,23 @@ export const filterRoutes = (
 ) => {
   // 检查用户是否有权限访问指定的菜单
   const hasAuthorized = (el: MainRouteProps) => {
-    return !el.code || menus[el.code] || resources[el.code];
+    // return !el.code || menus[el.code] || resources[el.code];
+    return !el.code || menus[el.code];
   };
+  // 过滤子菜单
+  const filterChildren = (child: MainRouteProps) => {
+    if (child.children) {
+      child.children = child.children.filter(filterChildren);
+    }
+    return hasAuthorized(child);
+  };
+  return routes.filter((el: MainRouteProps) => {
+    const isAuthorized = hasAuthorized(el);
+    if (isAuthorized) {
+      filterChildren(el);
+    }
+    return isAuthorized;
+  });
 };
 /**
  * 全部路由配置，菜单会根据此路由自动生成
@@ -78,24 +93,21 @@ export const routes: MainRouteProps[] = [
     path: '/workbar',
     title: '工作台',
     exact: true,
-    // hideInMenu: true,
     icon: <DesktopOutlined />,
-    element: lazyLoad(() => import('./workbar'))
+    element: lazyLoad(() => import('./workbar')),
+    code: 'skWorkbar'
   },
   {
     path: '/handover-manage',
     title: '交接管理',
     code: 'handoverManage',
-    exact: true,
     icon: <ContactsOutlined />,
     children: [
       {
         path: '/handover-manage/sclass-handover-pool',
         title: '小班交接池',
-        exact: true,
-        icon: <DesktopOutlined />,
         element: lazyLoad(() => import('./sclass_handover_pool'))
-      }
+      } as MainRouteProps
     ]
   },
   {
@@ -108,11 +120,11 @@ export const routes: MainRouteProps[] = [
   {
     path: 'https://codemao.cn/',
     title: '外链菜单',
-    code: 'orderManagement',
-    icon: <LinkOutlined />
+    icon: <LinkOutlined />,
+    code: 'orderManagement'
   },
   {
     path: '*',
-    element: lazyLoad(() => import('../components/not-found'))
+    element: lazyLoad(() => import('@/components/not-found'))
   }
 ];

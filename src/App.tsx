@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.scss';
 import { Provider } from 'react-redux';
 import zhCN from 'antd/locale/zh_CN';
-import 'antd/dist/reset.css';
+// import 'antd/dist/reset.css';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 dayjs.locale('zh-cn');
@@ -13,12 +13,13 @@ import Loading from './components/loading';
 import Forbidden from './components/forbidden';
 import LayoutBasic from './components/layout-basic';
 import useAuthStore from './store/auth';
+import { filterRoutes } from './pages/routes';
 const store = getStore();
 
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [hasAuthorized, setHasAuthorized] = useState(true);
-  const { fetchAuthInfo, fetchAuthMenus, fetchAuthResources } = useAuthStore();
+  const { fetchAuthInfo, fetchAuthMenus, fetchAuthResources, setRoutes } = useAuthStore();
   const init = useCallback(async () => {
     const info = await fetchAuthInfo();
     if (!info) {
@@ -28,9 +29,13 @@ const App = () => {
     const resources = await fetchAuthResources();
     const mlen = Object.keys(menus).length;
     const rlen = Object.keys(resources).length;
+    if (mlen !== 0) {
+      const fiRoutes = filterRoutes(menus, resources);
+      setRoutes(fiRoutes);
+    }
     setHasAuthorized(mlen !== 0 || rlen !== 0);
     setLoading(false);
-  }, [fetchAuthInfo, fetchAuthMenus, fetchAuthResources]);
+  }, [fetchAuthInfo, fetchAuthMenus, fetchAuthResources, setRoutes]);
   useEffect(() => {
     init();
   }, [init]);

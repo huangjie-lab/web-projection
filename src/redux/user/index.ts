@@ -1,13 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
+
+export type IUserStateType = {
+  username: string;
+  age: number;
+  password: string;
+};
+
+const defaultState: IUserStateType = {
+  username: '张三',
+  age: 20,
+  password: 'old password'
+};
 //定义了 数据和初始值 以及修改的方法
 const userSlice = createSlice({
   // 模块名
   name: 'user',
-  initialState: {
-    username: '张三',
-    age: 20,
-    password: 'old password'
-  },
+  initialState: defaultState,
   // 操作数据方法
   reducers: {
     //获取数据并解构使用 payload

@@ -5,14 +5,15 @@ import styles from './index.scss';
 //导入 状态管理库的修改方法
 import { setUserInfo, setUserPwd, update } from '@/redux/user';
 import { update as updateCount, increment } from '@/redux/count';
+import { IReduxState } from '@/redux/root-reducer';
 interface TestReduxProps {
   name?: string;
 }
 const TestRedux: React.FC<TestReduxProps> = ({ name = 'testredux' }) => {
   const dispatch = useDispatch();
   //获取数据
-  const { password, username, age } = useSelector((store) => (store as any).user);
-  const { count } = useSelector((store) => (store as any).count);
+  const { password, username, age } = useSelector((store: IReduxState) => store.user);
+  const { count } = useSelector((store: IReduxState) => store.count);
 
   // console.log('redux数据更新时，使用到该数据的组件会重新render');
   //派发 提交修改

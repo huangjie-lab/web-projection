@@ -103,6 +103,7 @@ const WaterMask: FC<WaterMaskProps> = (props) => {
     parentEl.style.position = 'relative';
     // 创建水印元素
     waterMaskEl = document.createElement('div');
+    waterMaskEl.className = 'water-mask';
     waterMaskEl.style.pointerEvents = 'none';
     waterMaskEl.style.position = 'absolute';
     waterMaskEl.style.top = '0';
@@ -113,7 +114,9 @@ const WaterMask: FC<WaterMaskProps> = (props) => {
     waterMaskEl.style.zIndex = '99999';
     // 创建水印内容并添加到父元素中
     waterMaskEl.style.background = `url(${createBase64(info?.fullname)}) left top repeat`;
-    parentEl.appendChild(waterMaskEl);
+    if (!parentEl.querySelector('.water-mask')) {
+      parentEl.appendChild(waterMaskEl);
+    }
   };
   useEffect(() => {
     init();

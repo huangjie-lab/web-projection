@@ -14,7 +14,7 @@ import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import useAuthStore from '@/store/auth';
 // import config from '@/utils/config';
 import { postLogout } from '@/api/auth';
-// import MyBreadcrumb from '../my-breadcrumb';
+import MyBreadcrumb from '../my-breadcrumb';
 import styles from './index.scss';
 import { useTranslation } from 'react-i18next';
 
@@ -54,7 +54,7 @@ const BasicHeader: FC<BasicHeaderProps> = (props) => {
           icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
           onClick={onToggle}
         />
-        {/* <MyBreadcrumb /> */}
+        <MyBreadcrumb />
       </div>
       <Space>
         <Switch

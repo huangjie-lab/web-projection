@@ -94,7 +94,7 @@ export const routes: MainRouteProps[] = [
     title: '工作台',
     exact: true,
     icon: <DesktopOutlined />,
-    element: lazyLoad(() => import('./workbar')),
+    element: lazyLoad(() => import(/* webpackChunkName: "workbar" */ './workbar')),
     code: 'skWorkbar'
   },
   {

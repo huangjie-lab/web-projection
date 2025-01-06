@@ -3,7 +3,6 @@ import { Layout, Menu } from 'antd';
 import type { ItemType } from 'antd/es/menu/interface';
 import { Link } from 'react-router';
 import styles from './index.scss';
-import IconLogo from '@/assets/images/icon-logo.svg';
 import { MainRouteProps } from '@/pages/routes';
 import useMenus from '@/hooks/use-menus';
 import useAuthStore from '@/store/auth';
@@ -63,7 +62,7 @@ const BasicSider: FC<BasicSiderProps> = ({ collapsed }) => {
     <Layout.Sider className={styles['g-sider']} collapsible trigger={null} collapsed={collapsed}>
       <div className={styles['sider-menu']}>
         <div className={styles.brand}>
-          <img src={IconLogo} className={styles.icon} />
+          <img src="/icon-logo.svg" className={styles.icon} />
           <h1 style={{ display: collapsed ? 'none' : 'block', whiteSpace: 'nowrap' }}>后台系统</h1>
         </div>
         <Menu

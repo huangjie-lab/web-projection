@@ -1,0 +1,19 @@
+{
+  "quoteKeys": ["t"],
+  "defaultLang": "zh",
+  "tempLangs": ["zh", "en"],
+  "langPaths": "**/src/i18n/locale/**",
+  "transSourcePaths": "**/src/i18n/source/**",
+  "tempPaths": "**/src/i18n/temp/**",
+  "tempFileName": "",
+  "multiFolders": ["src", "pages"],
+  "prefixKey": null,
+  "keyJoinStr": null,
+  "keyBoundaryChars": ["\n", ">", "<", "}", "{", "(", ")"],
+  "uncheckMissKeys": [],
+  "isSingleQuote": true,
+  "isOnlineTrans": true,
+  "translator": "baidu",
+  "baiduAppid": "20250103002244227",
+  "baiduSecrectKey": "1gv3cd_HYBD9bTD72jk0"
+}

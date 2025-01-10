@@ -203,6 +203,11 @@ pnpm exec lint-staged
 
 #### 主题切换 todo...
 
-#### 水印 canvas方法 使用MutationObserver(待完善)
+#### 水印 canvas方法 使用 MutationObserver (简易版)
+
+1. 定义好支持传入的属性
+2. 传入 canvas 生成对应的 base64 url
+3. 追加到 div 容器内
+4. 使用 MutationObserver 来监听 dom 变化 来追加水印元素到容器
 
 #### 国际化 使用i18n-react进行国际化和du-i18n进行文件扫描翻译(待完善)

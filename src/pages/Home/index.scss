@@ -17,3 +17,22 @@
 .png {
   background-image: url('@/assets/images/nocall.png');
 }
+
+// todo...
+.custom-styles {
+  color: red !important;
+  font-size: 20px !important;
+  font-weight: bold !important;
+}
+
+.testBg {
+  width: 200px;
+  height: 200px;
+
+  background-color: orange;
+  // 背景图x y轴的偏移
+  background-position: 20px 50px;
+  background-image: url('@/assets/images/nocall.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}

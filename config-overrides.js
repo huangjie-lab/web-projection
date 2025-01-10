@@ -48,9 +48,9 @@ module.exports = {
         }
       };
       // 超出文件大小给提示或者报错 'false' | 'warning' | 'error'
-      config.performance = {
-        hints: 'warning'
-      };
+      // config.performance = {
+      //   hints: 'false'
+      // };
       console.log(config);
       return config;
     },
@@ -87,7 +87,8 @@ module.exports = {
       '@': path.resolve(__dirname, 'src')
     }),
     addWebpackPlugin(
-      new WebpackBar()
+      // new WebpackBar()
+      new MiniCssExtractPlugin()
       // new ProgressBarWebpackPlugin()
     ),
     //addWebpackResolve(resolve)导入文件的时候可以不用添加文件的后缀名

@@ -1,10 +1,22 @@
 import useAuthStore from '@/store/auth';
-import { useEffect, type FC, type ReactElement } from 'react';
+import React, { useEffect, useRef, useState, type FC, type ReactElement } from 'react';
+import styles from './index.scss';
+import { useMutationObserver } from './useMutationObserver';
+import useRafDebounce from './useRafDebounce';
+import { useWaterMask } from './useWaterMask';
+import { reRender } from './util';
+export const defaultOption = {
+  subtree: true, //当为 true 时，将会监听以 target 为根节点的整个子树。默认值为 false。
+  childList: true, //当为 true 时，监听 target 节点中发生的节点的新增与删除（同时，如果 subtree 为 true，会针对整个子树生效）。默认值为 false。
+  attributeFilter: ['style', 'class'] //一个用于声明哪些属性名会被监听的数组。如果不声明该属性，所有属性的变化都将触发通知。
+};
 /**
  * 高阶组件
  * 实现水印效果
  */
 interface WaterMaskProps {
+  className?: string;
+  style?: React.CSSProperties;
   children: ReactElement;
 }
 // 设置水印文本的基本配置
@@ -26,9 +38,7 @@ const defaultConfig = {
   /** 水印文本，暂时放到这里，一般会提取出来将其作为一个全局变量*/
   backupText: '水印文本'
 };
-function createBase64(maskText: string | undefined) {
-  console.log(maskText, 'maskText');
-
+function createBase64(maskText: string | undefined): string {
   // 解构配置
   const { color, opacity, size, family, angle, width, height, backupText } = defaultConfig;
   // 创建一个画布
@@ -57,76 +67,57 @@ function createBase64(maskText: string | undefined) {
   return canvasEl.toDataURL();
 }
 
-let parentEl = undefined;
-let waterMaskEl: any = undefined;
-//设置监听器
-const observer = {
-  watermarkElMutationObserver: undefined,
-  parentElMutationObserver: undefined
-};
-const addMutationListener = (targetNode: any) => {
-  const mutationCallback = (mutationList: any) => {
-    //水印的防御 (防止用户手动删除水印或通过css隐藏水印)
-    mutationList.forEach((mutation: any) => {
-      switch (mutation.type) {
-        case 'childList':
-          console.log('exec');
-          mutation.removedNodes.forEach((item: any) => {
-            item === waterMaskEl && targetNode.appendChild(waterMaskEl);
-          });
-          break;
+const WaterMask: FC<WaterMaskProps> = ({ children, style, className }) => {
+  const { info } = useAuthStore();
+  const [waterMaskInfo, setWaterMaskInfo] = useState<[base64: string]>(null!);
+  const waterMaskStyles: React.CSSProperties = {
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    width: '100%',
+    height: '100%',
+    zIndex: 99999,
+    pointerEvents: 'none',
+    backgroundRepeat: 'repeat'
+  };
+  const [appendWaterMask, isWaterMaskEle] = useWaterMask(waterMaskStyles);
+
+  const init = () => {
+    // 简化版生成base64Url;
+    setWaterMaskInfo([createBase64(info?.fullname)]);
+  };
+
+  // 类似防抖
+  const syncInit = useRafDebounce(init);
+
+  useEffect(() => {
+    info && syncInit();
+  }, [info]);
+
+  // 追加水印到容器
+  useEffect(() => {
+    if (waterMaskInfo) {
+      appendWaterMask(container.current as HTMLDivElement, waterMaskInfo[0]);
+    }
+  }, [waterMaskInfo]);
+  // 监听水印元素和容器元素
+  const container = useRef<HTMLDivElement>(null);
+  const onMutate = (mutationList: MutationRecord[]) => {
+    mutationList.forEach((mutation: MutationRecord) => {
+      if (reRender(mutation, isWaterMaskEle)) {
+        console.log('rendered');
+        syncInit();
       }
     });
   };
-  //创建观察器实例并传入回调
-  observer.watermarkElMutationObserver = new MutationObserver(mutationCallback) as any;
-  observer.parentElMutationObserver = new MutationObserver(mutationCallback) as any;
-  //以上述配置 启动水印元素监听器，开始观察目标节点
-  (observer.watermarkElMutationObserver as any).observe(waterMaskEl, {
-    // 观察目标节点属性是否变动，默认为 true
-    attributes: true,
-    // 观察目标子节点是否有添加或者删除，默认为 false
-    childList: true,
-    // 是否拓展到观察所有后代节点，默认为 false
-    subtree: true
-  });
-  // 启动父级容器 监听器，
-  (observer.parentElMutationObserver as any).observe(targetNode, {
-    attributes: true,
-    childList: true,
-    subtree: true
-  });
-};
-const WaterMask: FC<WaterMaskProps> = ({ children }) => {
-  const { info } = useAuthStore();
-  const init = () => {
-    parentEl = document.getElementById('root') as HTMLDivElement;
-    // 设置父元素定位
-    // parentEl.style.position = 'relative';
-    // 创建水印元素
-    waterMaskEl = document.createElement('div');
-    waterMaskEl.className = 'water-mask';
-    waterMaskEl.style.pointerEvents = 'none';
-    waterMaskEl.style.position = 'fixed';
-    waterMaskEl.style.top = '0';
-    waterMaskEl.style.left = '0';
-    const { clientWidth, clientHeight } = parentEl;
-    waterMaskEl.style.width = `${clientWidth}px`;
-    waterMaskEl.style.height = `${clientHeight}px`;
-    waterMaskEl.style.zIndex = '99999';
-    // 创建水印内容并添加到父元素中
-    waterMaskEl.style.background = `url(${createBase64(info?.fullname)}) left top repeat`;
-    if (!parentEl.querySelector('.water-mask')) {
-      parentEl.appendChild(waterMaskEl);
-    }
-  };
-  useEffect(() => {
-    info && init();
-  }, [info]);
-
-  // 监听水印元素和容器元素
-  // addMutationListener(parentEl);
-  return children;
+  useMutationObserver(container.current as HTMLElement, onMutate);
+  return (
+    // style={style} className todo...
+    <div ref={container} className={[styles['water-mark-root'], className].join(' ')} style={style}>
+      {children}
+      {/* 水印元素 */}
+    </div>
+  );
 };
 
 export default WaterMask;

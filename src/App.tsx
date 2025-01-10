@@ -22,6 +22,8 @@ import i18next from 'i18next';
 import enTranslation from '@/assets/locales/en';
 import zhTranslation from '@/assets/locales/zh';
 
+// 引入本地hug-ui
+// import 'hug-ui/dist/hug-ui.css';
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [hasAuthorized, setHasAuthorized] = useState(true);
@@ -57,7 +59,7 @@ const App = () => {
     });
   }, [i18next]);
   return (
-    <WaterMask>
+    <WaterMask style={{ color: 'red', fontSize: 20, fontWeight: 'bold' }}>
       <I18nextProvider i18n={i18next}>
         <ConfigProvider locale={zhCN}>
           {loading ? (

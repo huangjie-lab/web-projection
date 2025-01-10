@@ -28,6 +28,7 @@ module.exports = {
   plugins: ['@typescript-eslint', 'react'],
   rules: {
     'no-var': 2,
+    'no-empty': 0,
     'react/no-unknown-property': [1, { ignore: ['styleName', 'nodeintegration'] }],
     'react/require-default-props': 0,
     'require-atomic-updates': 0,

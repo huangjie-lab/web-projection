@@ -59,7 +59,12 @@ const App = () => {
     });
   }, [i18next]);
   return (
-    <WaterMask style={{ color: 'red', fontSize: 20, fontWeight: 'bold' }}>
+    <WaterMask
+      wrapperClass="testMaskMustBeGlobal"
+      style={{ background: 'orange' }}
+      font={{ size: 20, color: 'red' }}
+      opacity={0.3}
+    >
       <I18nextProvider i18n={i18next}>
         <ConfigProvider locale={zhCN}>
           {loading ? (

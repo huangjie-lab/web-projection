@@ -11,4 +11,8 @@
     font-size: 48px;
     pointer-events: none;
   }
+  // 似乎明白了为啥修改antd组件为啥要加:global
+  .testMaskMustBeGlobal {
+    padding-right: 5px;
+  }
 }

@@ -14,15 +14,22 @@ export const defaultOption = {
  * 高阶组件
  * 实现水印效果
  */
-interface WaterMaskProps {
-  className?: string;
-  style?: React.CSSProperties;
+type WaterMaskProps = Omit<React.HtmlHTMLAttributes<HTMLDivElement>, 'content' | 'className'> & {
+  font?: {
+    color?: string;
+    size?: number | string;
+    weight?: string;
+  };
+  opacity?: number;
+  content?: string;
+  wrapperClass?: string; // 传进来时 必须使用:global包裹 不然会因为类名有后缀而不生效
+  // 如果还需要支持其他参数 可以追加...
   children: ReactElement;
-}
+};
 // 设置水印文本的基本配置
 const defaultConfig = {
   /** 文本颜色 */
-  color: '#c0c4cc',
+  color: 'gray',
   /** 文本透明度 */
   opacity: 0.2,
   /** 文本字体大小 */
@@ -38,36 +45,15 @@ const defaultConfig = {
   /** 水印文本，暂时放到这里，一般会提取出来将其作为一个全局变量*/
   backupText: '水印文本'
 };
-function createBase64(maskText: string | undefined): string {
-  // 解构配置
-  const { color, opacity, size, family, angle, width, height, backupText } = defaultConfig;
-  // 创建一个画布
-  const canvasEl = document.createElement('canvas');
-  //设置宽高
-  canvasEl.width = width;
-  canvasEl.height = height;
-  /**
-   * 创建 context 对象
-   * getContext("2d") 对象是内建的 HTML5 对象，
-   * 拥有多种绘制路径、矩形、圆形、字符以及添加图像的方法
-   */
-  const ctx = canvasEl.getContext('2d');
-  if (ctx) {
-    // 设置颜色
-    ctx.fillStyle = color;
-    // 设置透明度
-    ctx.globalAlpha = opacity;
-    //设置字体
-    ctx.font = `${size}px ${family}`;
-    //设置倾斜度
-    ctx.rotate((Math.PI / 180) * angle);
-    //设置水印文本
-    ctx.fillText(maskText || backupText, 0, height / 2);
-  }
-  return canvasEl.toDataURL();
-}
 
-const WaterMask: FC<WaterMaskProps> = ({ children, style, className }) => {
+const WaterMask: FC<WaterMaskProps> = ({
+  children,
+  font = {},
+  opacity,
+  content,
+  style,
+  wrapperClass
+}) => {
   const { info } = useAuthStore();
   const [waterMaskInfo, setWaterMaskInfo] = useState<[base64: string]>(null!);
   const waterMaskStyles: React.CSSProperties = {
@@ -76,10 +62,43 @@ const WaterMask: FC<WaterMaskProps> = ({ children, style, className }) => {
     left: '0',
     width: '100%',
     height: '100%',
-    zIndex: 99999,
+    zIndex: 999,
     pointerEvents: 'none',
     backgroundRepeat: 'repeat'
   };
+
+  const createBase64 = (maskText: string | undefined): string => {
+    // 读取自定义配置
+    const { color = defaultConfig.color, size = defaultConfig.size, weight = 'bold' } = font;
+    // 解构配置
+    const { family, angle, width, height, backupText } = defaultConfig;
+    // 创建一个画布
+    const canvasEl = document.createElement('canvas');
+    //设置宽高
+    canvasEl.width = width;
+    canvasEl.height = height;
+    /**
+     * 创建 context 对象
+     * getContext("2d") 对象是内建的 HTML5 对象，
+     * 拥有多种绘制路径、矩形、圆形、字符以及添加图像的方法
+     */
+    const ctx = canvasEl.getContext('2d');
+    if (ctx) {
+      // 设置颜色
+      ctx.fillStyle = color;
+      // 设置透明度
+      ctx.globalAlpha = opacity ?? defaultConfig.opacity;
+      //设置字体
+      ctx.font = `${size}px ${family} ${weight}`;
+      // ctx.font = `${fontStyle} normal ${fontWeight} ${mergedFontSize}px/${height}px ${fontFamily}`;
+      //设置倾斜度
+      ctx.rotate((Math.PI / 180) * angle);
+      //设置水印文本
+      ctx.fillText(content || maskText || backupText, 0, height / 2);
+    }
+    return canvasEl.toDataURL();
+  };
+
   const [appendWaterMask, isWaterMaskEle] = useWaterMask(waterMaskStyles);
 
   const init = () => {
@@ -112,8 +131,12 @@ const WaterMask: FC<WaterMaskProps> = ({ children, style, className }) => {
   };
   useMutationObserver(container.current as HTMLElement, onMutate);
   return (
-    // style={style} className todo...
-    <div ref={container} className={[styles['water-mark-root'], className].join(' ')} style={style}>
+    // 自定义的wrapperClass和style都能生效
+    <div
+      ref={container}
+      className={[styles['water-mark-root'], wrapperClass].join(' ')}
+      style={style}
+    >
       {children}
       {/* 水印元素 */}
     </div>

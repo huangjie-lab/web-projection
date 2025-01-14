@@ -21,11 +21,13 @@ import { I18nextProvider } from 'react-i18next';
 import i18next from 'i18next';
 import enTranslation from '@/assets/locales/en';
 import zhTranslation from '@/assets/locales/zh';
+import { Theme, ThemeContext } from './utils/themeContext';
 
 // 引入本地hug-ui
 // import 'hug-ui/dist/hug-ui.css';
 const App = () => {
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState<Theme>('light');
   const [hasAuthorized, setHasAuthorized] = useState(true);
   const { fetchAuthInfo, fetchAuthMenus, fetchAuthResources, setRoutes } = useAuthStore();
   const init = useCallback(async () => {
@@ -59,30 +61,37 @@ const App = () => {
     });
   }, [i18next]);
   return (
-    <WaterMask
-      wrapperClass="testMaskMustBeGlobal"
-      style={{ background: 'orange' }}
-      font={{ size: 20, color: 'red' }}
-      opacity={0.3}
-    >
-      <I18nextProvider i18n={i18next}>
-        <ConfigProvider locale={zhCN}>
-          {loading ? (
-            <Loading />
-          ) : hasAuthorized ? (
-            <Provider store={store}>
-              <BrowserRouter>
-                <Routes>
-                  <Route path="*" element={<LayoutBasic />}></Route>
-                </Routes>
-              </BrowserRouter>
-            </Provider>
-          ) : (
-            <Forbidden />
-          )}
-        </ConfigProvider>
-      </I18nextProvider>
-    </WaterMask>
+    <I18nextProvider i18n={i18next}>
+      <ConfigProvider locale={zhCN}>
+        {loading ? (
+          <Loading />
+        ) : hasAuthorized ? (
+          <WaterMask
+            wrapperClass="testMaskMustBeGlobal"
+            style={{ background: 'orange' }}
+            font={{ size: 20, color: 'red' }}
+            opacity={0.3}
+          >
+            <ThemeContext.Provider
+              value={{
+                theme,
+                setTheme
+              }}
+            >
+              <Provider store={store}>
+                <BrowserRouter>
+                  <Routes>
+                    <Route path="*" element={<LayoutBasic />}></Route>
+                  </Routes>
+                </BrowserRouter>
+              </Provider>
+            </ThemeContext.Provider>
+          </WaterMask>
+        ) : (
+          <Forbidden />
+        )}
+      </ConfigProvider>
+    </I18nextProvider>
   );
 };
 export default App;

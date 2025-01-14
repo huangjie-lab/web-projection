@@ -15,6 +15,39 @@ const pickaA: picka = {
   id: '',
   title: '1'
 };
+
+// Q1. 使用泛型约束和工具函数Exclude实现部分属性只读（可选同理）(全部只读和可选一样)
+interface User {
+  name: string;
+  age: number;
+  add: string;
+}
+
+// type a = Record<Partial<keyof User>, string>;
+// const aa :keyof User = 'add'
+type partialReadonly<T, K extends keyof T> = {
+  readonly [p in K]: T[p];
+} & {
+  [p in Exclude<keyof T, K>]: T[p];
+};
+
+const user: partialReadonly<User, 'name'> = {
+  name: 'a',
+  age: 1,
+  add: '1'
+};
+user.age = 2;
+
+// 无法为“name”赋值，因为它是只读属性
+// user.name = 'b';
+
+const obj = { name: 'a', age: 1 };
+obj.name = 'b';
+
+// as const 修饰的不可修改
+// const obj1 = { name: 'a', age: 1 } as const;
+// obj1.name = 'b';
+
 type partiala = Partial<IProps>;
 const partialaA: partiala = {
   id: '1'
@@ -46,6 +79,12 @@ function getValue1<T>(value: T): T {
   return value;
 }
 
+export type aa = (name: number) => void;
+const aaa: aa = (num) => {
+  console.log(num);
+};
+console.log(aaa);
+
 getValue<number>(1);
 getValue1(false); //类型推断为字面量类型100
 
@@ -54,6 +93,36 @@ function getArr<K, V>(value1: K, value2: V): [K, V] {
   return [value1, value2];
 }
 
+// 泛型函数默认值
+type a = {
+  name: string;
+  add?: string;
+};
+type b = {
+  name: string;
+  age: string;
+  onClick: (value: boolean) => boolean;
+};
+
+/**
+ * b 要继承自 a(a 中的必选参数，课选参数除外)
+ * 传入的参数必须继承自 a
+ * 如果没传 泛型 T 默认使用 b 同时会断言参数是否满足 a
+ * 那默认值 b 的作用在哪？ 在写参数时类型提示
+ */
+function c<T extends a = b>(value: T): T {
+  return value;
+}
+
+c<{ name: string; add: string }>({ name: '1', add: '2' });
+// “phone”不在类型“a”中
+// c({ phone: '1' });
+c({ name: '1', phone: 1 });
+
+type d = b['onClick'];
+const dd: d = (value) => {
+  return value;
+};
 /**
  * 泛型约束
  * 使用extends关键字为泛型添加约束
@@ -120,7 +189,7 @@ const Type1Obj: Type1 = {
   c: true
 };
 
-// 泛型工具partial是根据映射类型实现的
+// Q2. 泛型工具partial是根据映射类型实现的
 type MyPartial<T> = {
   [key in keyof T]?: T[key];
 };

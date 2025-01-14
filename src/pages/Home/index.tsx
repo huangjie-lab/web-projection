@@ -1,17 +1,24 @@
-import { type FC } from 'react';
+import { useContext, type FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './index.scss';
+import { useThemeConsumer } from '@/utils/themeContext';
 // npm link 本地的包
 // import { Divider, FishProvider, Button } from 'hug-ui';
 
 const Home: FC = () => {
   const { t } = useTranslation();
+  const { theme, setTheme } = useThemeConsumer();
   return (
     <>
       <h1>{t('greeting')}</h1>
       {/* public文件夹的文件直接打包到build文件夹下 可以使用跟路径/来访问 */}
-      <img src={'/icon-logo.svg'} width={20} />
+      <img
+        src={'/icon-logo.svg'}
+        width={20}
+        onClick={() => setTheme?.(theme === 'dark' ? 'light' : 'dark')}
+      />
       <div className={styles.png}></div>
+      <div>{theme}</div>
       {/* <FishProvider>
         <div style={{ margin: '0 100px' }}>
           <div style={{ marginBottom: 10 }}>

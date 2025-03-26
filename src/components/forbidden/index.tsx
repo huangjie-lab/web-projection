@@ -1,18 +1,18 @@
-import type { FC } from 'react';
-import { Result, Button, message } from 'antd';
-import { postLogout } from '@/api/auth';
+import type { FC } from 'react'
+import { Result, Button, message } from 'antd'
+import { postLogout } from '@/api/auth'
 // import config from 'src/utils/config'
 
 const Forbidden: FC = () => {
   // 退出登录
   const logout = async () => {
-    const { status } = await postLogout();
+    const { status } = await postLogout()
     if (status < 300) {
-      message.success('退出成功');
+      message.success('退出成功')
       // const redirect = encodeURIComponent(window.location.href);
       // window.location.href = `${config.url.internal}/login?redirect=${redirect}`;
     }
-  };
+  }
 
   return (
     <Result
@@ -25,7 +25,7 @@ const Forbidden: FC = () => {
         </Button>
       }
     />
-  );
-};
+  )
+}
 
-export default Forbidden;
+export default Forbidden

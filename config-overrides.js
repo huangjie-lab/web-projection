@@ -6,11 +6,11 @@ const {
   overrideDevServer,
   addWebpackResolve,
   addWebpackPlugin
-} = require('customize-cra');
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const WebpackBar = require('webpackbar');
-const ProgressBarWebpackPlugin = require('progress-bar-webpack-plugin');
+} = require('customize-cra')
+const path = require('path')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const WebpackBar = require('webpackbar')
+const ProgressBarWebpackPlugin = require('progress-bar-webpack-plugin')
 
 // 配置代理服务器
 const devServerConfig = () => (config) => {
@@ -23,17 +23,17 @@ const devServerConfig = () => (config) => {
         pathRewrite: { '^/api': '' } // 要配上这个
       }
     }
-  };
-};
+  }
+}
 module.exports = {
   webpack: override(
     (config) => {
-      console.log(config);
-      config.output.filename = 'static/bundle/[name].[contenthash:8].js';
-      config.output.chunkFilename = 'static/js/[name].[contenthash:5].chunk.js';
-      config.output.clean = true;
-      config.mode = 'development';
-      config.devtool = 'inline-source-map';
+      console.log(config)
+      config.output.filename = 'static/bundle/[name].[contenthash:8].js'
+      config.output.chunkFilename = 'static/js/[name].[contenthash:5].chunk.js'
+      config.output.clean = true
+      config.mode = 'development'
+      config.devtool = 'inline-source-map'
       config.optimization = {
         ...config.optimization,
         // 将node_modules中内容单独抽离成一个文件
@@ -46,13 +46,13 @@ module.exports = {
             }
           }
         }
-      };
+      }
       // 超出文件大小给提示或者报错 'false' | 'warning' | 'error'
       // config.performance = {
       //   hints: 'false'
       // };
-      console.log(config);
-      return config;
+      console.log(config)
+      return config
     },
     addWebpackModuleRule(
       // react脚手架默认支持scss 不支持less
@@ -67,6 +67,8 @@ module.exports = {
             options: {
               modules: {
                 mode: 'local',
+                // 如果引入样式 undefined 可加入该配置项
+                // namedExport: false,
                 localIdentName: '[local]--[hash:base64:5]'
               }
             }
@@ -97,4 +99,4 @@ module.exports = {
     })
   ),
   devServer: overrideDevServer(devServerConfig())
-};
+}

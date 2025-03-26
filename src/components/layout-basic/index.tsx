@@ -1,20 +1,20 @@
-import { type FC, useState } from 'react';
-import { Layout, theme } from 'antd';
-import { useRoutes } from 'react-router';
-import styles from './index.scss';
-import BasicSider from './sider';
-import BasicHeader from './header';
-import useAuthStore from '@/store/auth';
+import { type FC, useState } from 'react'
+import { Layout, theme } from 'antd'
+import { useRoutes } from 'react-router'
+import styles from './index.scss'
+import BasicSider from './sider'
+import BasicHeader from './header'
+import useAuthStore from '@/store/auth'
 
 const LayoutBasic: FC = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  const { routes } = useAuthStore();
-  const element = useRoutes(routes);
-  const { token } = theme.useToken();
+  const [collapsed, setCollapsed] = useState(false)
+  const { routes } = useAuthStore()
+  const element = useRoutes(routes)
+  const { token } = theme.useToken()
 
   const onToggle = () => {
-    setCollapsed(!collapsed);
-  };
+    setCollapsed(!collapsed)
+  }
 
   return (
     <Layout className={styles['g-layout']} hasSider>
@@ -34,6 +34,6 @@ const LayoutBasic: FC = () => {
         </Layout.Content>
       </Layout>
     </Layout>
-  );
-};
-export default LayoutBasic;
+  )
+}
+export default LayoutBasic

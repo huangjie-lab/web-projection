@@ -1,50 +1,50 @@
-import { RouteObject } from 'react-router-dom';
+import { RouteObject } from 'react-router-dom'
 import {
   ContactsOutlined,
   DesktopOutlined,
   HomeOutlined,
   LinkOutlined,
   UnorderedListOutlined
-} from '@ant-design/icons';
-import Loading from '@/components/loading';
-import { ComponentType, lazy, ReactNode, Suspense } from 'react';
-import { ErrorBoundary } from '@/components/error-boundary';
+} from '@ant-design/icons'
+import Loading from '@/components/loading'
+import { ComponentType, lazy, ReactNode, Suspense } from 'react'
+import { ErrorBoundary } from '@/components/error-boundary'
 
 /**
  * 菜单属性
  */
 type MenuProps = {
   /** 菜单名称 */
-  title?: string;
+  title?: string
   /** 图标 */
-  icon?: ReactNode;
+  icon?: ReactNode
   /** 权限Code */
-  code?: string;
+  code?: string
   /** 菜单中隐藏 */
-  hideInMenu?: boolean;
+  hideInMenu?: boolean
   /** 子菜单 */
-  children?: MenuProps[];
-  exact?: boolean;
-};
+  children?: MenuProps[]
+  exact?: boolean
+}
 
 /**
  * 路由菜单属性
  */
-export type MainRouteProps = RouteObject & MenuProps;
+export type MainRouteProps = RouteObject & MenuProps
 
 /**
  * 懒加载
  */
 const lazyLoad = (dynamicImport: () => Promise<{ default: ComponentType<any> }>) => {
-  const Component = lazy(dynamicImport);
+  const Component = lazy(dynamicImport)
   return (
     <ErrorBoundary>
       <Suspense fallback={<Loading delay={500} />}>
         <Component />
       </Suspense>
     </ErrorBoundary>
-  );
-};
+  )
+}
 
 /**
  * 根据权限过滤路由
@@ -61,23 +61,23 @@ export const filterRoutes = (
   // 检查用户是否有权限访问指定的菜单
   const hasAuthorized = (el: MainRouteProps) => {
     // return !el.code || menus[el.code] || resources[el.code];
-    return !el.code || menus[el.code];
-  };
+    return !el.code || menus[el.code]
+  }
   // 过滤子菜单
   const filterChildren = (child: MainRouteProps) => {
     if (child.children) {
-      child.children = child.children.filter(filterChildren);
+      child.children = child.children.filter(filterChildren)
     }
-    return hasAuthorized(child);
-  };
+    return hasAuthorized(child)
+  }
   return routes.filter((el: MainRouteProps) => {
-    const isAuthorized = hasAuthorized(el);
+    const isAuthorized = hasAuthorized(el)
     if (isAuthorized) {
-      filterChildren(el);
+      filterChildren(el)
     }
-    return isAuthorized;
-  });
-};
+    return isAuthorized
+  })
+}
 /**
  * 全部路由配置，菜单会根据此路由自动生成
  */
@@ -128,4 +128,4 @@ export const routes: MainRouteProps[] = [
     path: '*',
     element: lazyLoad(() => import('@/components/not-found'))
   }
-];
+]

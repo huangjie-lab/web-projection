@@ -1,4 +1,4 @@
-import type { MainRouteProps } from '@/pages/routes';
+import type { MainRouteProps } from '@/pages/routes'
 
 /**
  * 如果是 / 开头或者是 链接 的不作任何处理
@@ -10,9 +10,9 @@ import type { MainRouteProps } from '@/pages/routes';
  */
 function mergePath(path = '', parentPath = '/') {
   if (path.startsWith('/') || path.startsWith('http')) {
-    return path;
+    return path
   }
-  return `/${parentPath}/${path}`.replace(/\/\//g, '/').replace(/\/\//g, '/');
+  return `/${parentPath}/${path}`.replace(/\/\//g, '/').replace(/\/\//g, '/')
 }
 
 /**
@@ -25,20 +25,20 @@ function mergePath(path = '', parentPath = '/') {
  */
 export function getBreadcrumbMap(routes: MainRouteProps[]) {
   // const routerMap = new Map<string, MainRouteProps>();
-  const routerMap: Record<string, MainRouteProps> = {};
+  const routerMap: Record<string, MainRouteProps> = {}
   const flattenMenuData = (route: MainRouteProps[], parent?: MainRouteProps) => {
     route.forEach((el) => {
-      const child = el.children || [];
+      const child = el.children || []
       if (child.length !== 0) {
-        flattenMenuData(child, el);
+        flattenMenuData(child, el)
       }
-      const path = mergePath(el.path, parent ? parent.path : '/');
+      const path = mergePath(el.path, parent ? parent.path : '/')
       // routerMap.set(path, el);
-      routerMap[path] = el;
-    });
-  };
-  flattenMenuData(routes.filter((el) => el.path !== '*'));
-  return routerMap;
+      routerMap[path] = el
+    })
+  }
+  flattenMenuData(routes.filter((el) => el.path !== '*'))
+  return routerMap
 }
 
 /**
@@ -51,8 +51,8 @@ export function getBreadcrumbMap(routes: MainRouteProps[]) {
  */
 export function pathToList(path?: string) {
   if (!path || path === '/') {
-    return ['/'];
+    return ['/']
   }
-  const list = path.split('/').filter((i) => i);
-  return list.map((_, index) => `/${list.slice(0, index + 1).join('/')}`);
+  const list = path.split('/').filter((i) => i)
+  return list.map((_, index) => `/${list.slice(0, index + 1).join('/')}`)
 }

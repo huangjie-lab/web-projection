@@ -1,15 +1,15 @@
-import { useState, useEffect, type FC } from 'react';
-import { Layout, Menu } from 'antd';
-import type { ItemType } from 'antd/es/menu/interface';
-import { Link } from 'react-router';
-import styles from './index.scss';
-import { MainRouteProps } from '@/pages/routes';
-import useMenus from '@/hooks/use-menus';
-import useAuthStore from '@/store/auth';
+import { useState, useEffect, type FC } from 'react'
+import { Layout, Menu } from 'antd'
+import type { ItemType } from 'antd/es/menu/interface'
+import { Link } from 'react-router'
+import styles from './index.scss'
+import { MainRouteProps } from '@/pages/routes'
+import useMenus from '@/hooks/use-menus'
+import useAuthStore from '@/store/auth'
 
 type BasicSiderProps = {
-  collapsed: boolean;
-};
+  collapsed: boolean
+}
 
 /**
  * 遍历路由转换成菜单
@@ -20,16 +20,16 @@ type BasicSiderProps = {
 const transformMenu = (routes: MainRouteProps[]) => {
   const transformItem = (item: MainRouteProps) => {
     if (item.path === '*' || item.hideInMenu) {
-      return false;
+      return false
     }
     const el: any = {
       key: item.path,
       icon: item.icon,
       label: item.title
-    };
+    }
 
     if (item.children) {
-      el.children = item.children.map(transformItem);
+      el.children = item.children.map(transformItem)
     } else if (item.path) {
       el.label = item.path.startsWith('http') ? (
         <a href={item.path} target="_blank" rel="noreferrer">
@@ -37,26 +37,26 @@ const transformMenu = (routes: MainRouteProps[]) => {
         </a>
       ) : (
         <Link to={item.path}>{item.title}</Link>
-      );
+      )
     }
 
-    return el;
-  };
+    return el
+  }
 
-  return routes.map(transformItem).filter(Boolean);
-};
+  return routes.map(transformItem).filter(Boolean)
+}
 
 /**
  * 侧边栏
  */
 const BasicSider: FC<BasicSiderProps> = ({ collapsed }) => {
-  const [menus, setMenus] = useState<ItemType[]>([]);
-  const { openKeys, selectedKeys, onOpenChange } = useMenus();
-  const { routes } = useAuthStore();
+  const [menus, setMenus] = useState<ItemType[]>([])
+  const { openKeys, selectedKeys, onOpenChange } = useMenus()
+  const { routes } = useAuthStore()
   useEffect(() => {
-    const list = transformMenu(routes);
-    setMenus(list);
-  }, [routes]);
+    const list = transformMenu(routes)
+    setMenus(list)
+  }, [routes])
 
   return (
     <Layout.Sider className={styles['g-sider']} collapsible trigger={null} collapsed={collapsed}>
@@ -76,7 +76,7 @@ const BasicSider: FC<BasicSiderProps> = ({ collapsed }) => {
         />
       </div>
     </Layout.Sider>
-  );
-};
+  )
+}
 
-export default BasicSider;
+export default BasicSider

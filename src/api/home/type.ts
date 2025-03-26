@@ -1,7 +1,7 @@
 export interface IHomeParams {
-  id: number;
+  id: number
 }
 
 export interface IHomeRes extends IHomeParams {
-  msg: string;
+  msg: string
 }

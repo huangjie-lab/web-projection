@@ -12,19 +12,19 @@
 
 // export default store;
 
-import { configureStore } from '@reduxjs/toolkit';
-import rootReducer from './root-reducer';
-import { rootSaga } from './root-saga';
-import createSagaMiddleware from 'redux-saga';
+import { configureStore } from '@reduxjs/toolkit'
+import rootReducer from './root-reducer'
+import { rootSaga } from './root-saga'
+import createSagaMiddleware from 'redux-saga'
 
 export function getStore() {
   // 创建 saga middleware
-  const sagaMiddleware = createSagaMiddleware();
+  const sagaMiddleware = createSagaMiddleware()
   // rootReducer中包含多个模块的reducer
   const store = configureStore({
     reducer: rootReducer,
     middleware: () => [sagaMiddleware] as any
-  });
-  sagaMiddleware.run(rootSaga);
-  return store;
+  })
+  sagaMiddleware.run(rootSaga)
+  return store
 }

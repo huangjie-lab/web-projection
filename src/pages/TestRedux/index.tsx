@@ -1,26 +1,26 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Button } from 'antd';
-import styles from './index.scss';
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { Button } from 'antd'
+import styles from './index.scss'
 //导入 状态管理库的修改方法
-import { setUserInfo, setUserPwd, update } from '@/redux/user';
-import { update as updateCount, increment } from '@/redux/count';
-import { IReduxState } from '@/redux/root-reducer';
+import { setUserInfo, setUserPwd, update } from '@/redux/user'
+import { update as updateCount, increment } from '@/redux/count'
+import { IReduxState } from '@/redux/root-reducer'
 interface TestReduxProps {
-  name?: string;
+  name?: string
 }
 const TestRedux: React.FC<TestReduxProps> = ({ name = 'testredux' }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   //获取数据 使用全局状态里的数据 redux数据引入
-  const { password, username, age } = useSelector((store: IReduxState) => store.user);
-  const { count } = useSelector((store: IReduxState) => store.count);
+  const { password, username, age } = useSelector((store: IReduxState) => store.user)
+  const { count } = useSelector((store: IReduxState) => store.count)
 
   // console.log('redux数据更新时，使用到该数据的组件会重新render');
   //派发 提交修改
   const handleAction = () => {
     // dispatch(update({ username: 'dddd', age: 2 }));
-    dispatch(setUserPwd('new password'));
-  };
+    dispatch(setUserPwd('new password'))
+  }
   const handleSagaAction = () => {
     dispatch(
       setUserInfo({
@@ -28,18 +28,18 @@ const TestRedux: React.FC<TestReduxProps> = ({ name = 'testredux' }) => {
         age: 99,
         // 传递一个回调
         cb: (obj: any) => {
-          console.log(obj);
+          console.log(obj)
         }
       })
-    );
-    dispatch(setUserPwd('new saga password'));
-  };
+    )
+    dispatch(setUserPwd('new saga password'))
+  }
   const handleSyncAction = () => {
-    dispatch(updateCount(Math.random()));
-  };
+    dispatch(updateCount(Math.random()))
+  }
   const handleAsyncAction = () => {
-    dispatch(increment(10));
-  };
+    dispatch(increment(10))
+  }
   return (
     <div>
       <div>{name}</div>
@@ -63,6 +63,6 @@ const TestRedux: React.FC<TestReduxProps> = ({ name = 'testredux' }) => {
         模拟异步action
       </Button>
     </div>
-  );
-};
-export default TestRedux;
+  )
+}
+export default TestRedux

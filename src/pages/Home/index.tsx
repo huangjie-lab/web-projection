@@ -1,13 +1,13 @@
-import { useContext, type FC } from 'react';
-import { useTranslation } from 'react-i18next';
-import styles from './index.scss';
-import { useThemeConsumer } from '@/utils/themeContext';
+import { useContext, type FC } from 'react'
+import { useTranslation } from 'react-i18next'
+import styles from './index.scss'
+import { useThemeConsumer } from '@/utils/themeContext'
 // npm link 本地的包
 // import { Divider, FishProvider, Button } from 'hug-ui';
 
 const Home: FC = () => {
-  const { t } = useTranslation();
-  const { theme, setTheme } = useThemeConsumer();
+  const { t } = useTranslation()
+  const { theme, setTheme } = useThemeConsumer()
   return (
     <>
       <h1>{t('greeting')}</h1>
@@ -46,6 +46,6 @@ const Home: FC = () => {
       </FishProvider> */}
       <div className={styles.testBg}></div>
     </>
-  );
-};
-export default Home;
+  )
+}
+export default Home

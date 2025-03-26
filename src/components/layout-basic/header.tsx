@@ -1,4 +1,4 @@
-import { useState, type FC } from 'react';
+import { useState, type FC } from 'react'
 import {
   Layout,
   message,
@@ -9,39 +9,39 @@ import {
   type MenuProps,
   Space,
   Switch
-} from 'antd';
-import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
-import useAuthStore from '@/store/auth';
+} from 'antd'
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
+import useAuthStore from '@/store/auth'
 // import config from '@/utils/config';
-import { postLogout } from '@/api/auth';
-import MyBreadcrumb from '../my-breadcrumb';
-import styles from './index.scss';
-import { useTranslation } from 'react-i18next';
+import { postLogout } from '@/api/auth'
+import MyBreadcrumb from '../my-breadcrumb'
+import styles from './index.scss'
+import { useTranslation } from 'react-i18next'
 
 interface BasicHeaderProps {
-  collapsed: boolean;
-  onToggle(): void;
+  collapsed: boolean
+  onToggle(): void
 }
 
 const BasicHeader: FC<BasicHeaderProps> = (props) => {
-  const { collapsed, onToggle } = props;
-  const { token } = theme.useToken();
-  const { info } = useAuthStore();
-  const { i18n, t } = useTranslation();
-  const defaultChecked = localStorage.getItem('lang') === 'zh';
+  const { collapsed, onToggle } = props
+  const { token } = theme.useToken()
+  const { info } = useAuthStore()
+  const { i18n, t } = useTranslation()
+  const defaultChecked = localStorage.getItem('lang') === 'zh'
   const items: MenuProps['items'] = [
     {
       label: <a onClick={logout}>{t('logout')}</a>,
       key: 'logout',
       danger: true
     }
-  ];
+  ]
 
   // 退出
   async function logout() {
-    const { status, data } = await postLogout();
+    const { status, data } = await postLogout()
     if (/^2/.test(status.toString())) {
-      message.success(t('logoutSuccess'));
+      message.success(t('logoutSuccess'))
       // const redirect = encodeURIComponent(window.location.href);
     }
   }
@@ -62,8 +62,8 @@ const BasicHeader: FC<BasicHeaderProps> = (props) => {
           unCheckedChildren="en"
           defaultChecked={defaultChecked}
           onChange={(value) => {
-            i18n.changeLanguage(value ? 'zh' : 'en');
-            localStorage.setItem('lang', value ? 'zh' : 'en');
+            i18n.changeLanguage(value ? 'zh' : 'en')
+            localStorage.setItem('lang', value ? 'zh' : 'en')
             // window.location.reload();
           }}
         />
@@ -82,7 +82,7 @@ const BasicHeader: FC<BasicHeaderProps> = (props) => {
         </Dropdown>
       </Space>
     </Layout.Header>
-  );
-};
+  )
+}
 
-export default BasicHeader;
+export default BasicHeader

@@ -1,3 +1,3 @@
-const config = window.WEB_PRODUCTION;
+const config = window.WEB_PRODUCTION
 
-export default config;
+export default config

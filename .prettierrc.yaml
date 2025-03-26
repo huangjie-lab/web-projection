@@ -1,0 +1,5 @@
+# 使用yml修改配置文件无需重启编辑器
+singleQuote: true
+semi: false
+printWidth: 100
+trailingComma: none

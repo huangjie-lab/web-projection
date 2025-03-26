@@ -1,28 +1,28 @@
-import { type CSSProperties, type FC, useEffect, useState } from 'react';
-import { Spin } from 'antd';
+import { type CSSProperties, type FC, useEffect, useState } from 'react'
+import { Spin } from 'antd'
 
 type LoadingProps = {
-  className?: string;
-  style?: CSSProperties;
-  delay?: number;
-};
+  className?: string
+  style?: CSSProperties
+  delay?: number
+}
 
 const Loading: FC<LoadingProps> = (props) => {
-  const { className, style, delay } = props;
-  const [visible, setVisible] = useState(() => !delay);
+  const { className, style, delay } = props
+  const [visible, setVisible] = useState(() => !delay)
 
   useEffect(() => {
     if (!delay) {
-      return;
+      return
     }
     const timer = setTimeout(() => {
-      setVisible(true);
-    }, delay);
+      setVisible(true)
+    }, delay)
 
     return () => {
-      clearTimeout(timer);
-    };
-  }, [delay]);
+      clearTimeout(timer)
+    }
+  }, [delay])
 
   return visible ? (
     <div
@@ -38,7 +38,7 @@ const Loading: FC<LoadingProps> = (props) => {
     >
       <Spin />
     </div>
-  ) : null;
-};
+  ) : null
+}
 
-export default Loading;
+export default Loading

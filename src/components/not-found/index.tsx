@@ -1,6 +1,6 @@
-import type { FC } from 'react';
-import { Result, Button } from 'antd';
-import { Link } from 'react-router';
+import type { FC } from 'react'
+import { Result, Button } from 'antd'
+import { Link } from 'react-router'
 
 const NotFound: FC = () => {
   return (
@@ -14,7 +14,7 @@ const NotFound: FC = () => {
         </Link>
       }
     />
-  );
-};
+  )
+}
 
-export default NotFound;
+export default NotFound

@@ -211,3 +211,7 @@ pnpm exec lint-staged
 4. 使用 MutationObserver 来监听 dom 变化 来追加水印元素到容器
 
 #### 国际化 使用i18n-react进行国际化和du-i18n进行文件扫描翻译(待完善)
+
+#### 格式化规范改为.prettierrc.yaml每次修改无需重启vscode即刻生效
+
+#### .editorconfig文件：跨平台的文本编辑器配置文件，它的作用是定义统一的代码风格和格式化规则
